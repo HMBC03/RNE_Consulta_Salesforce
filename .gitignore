@@ -46,3 +46,19 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+# --- Salesforce DX & System ---
+.sfdx/
+.sf/
+.local/
+dist/
+node_modules/
+
+# --- Editor & OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# --- SEGURIDAD: NO SUBIR TOKENS ---
+# Esto evita que se suba el archivo con tu token real
+force-app/main/default/labels/CustomLabels.labels-meta.xml
