@@ -1,0 +1,185 @@
+<template>
+    <lightning-card title="Consulta Registro Números Excluidos (RNE)" icon-name="standard:record">
+        <div class="slds-p-around_medium">
+            
+            <!-- ========================================= -->
+            <!-- INPUTS DE BÚSQUEDA -->
+            <!-- ========================================= -->
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input
+                        label="Número Telefónico"
+                        value={phoneNumber}
+                        onchange={handlePhoneChange}
+                        placeholder="Ej: 3001234567"
+                        type="tel">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input
+                        label="Correo Electrónico"
+                        value={email}
+                        onchange={handleEmailChange}
+                        placeholder="Ej: ejemplo@correo.com"
+                        type="email">
+                    </lightning-input>
+                </div>
+            </div>
+            
+            <!-- ========================================= -->
+            <!-- BOTÓN DE CONSULTA -->
+            <!-- ========================================= -->
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    variant="brand"
+                    label="Consultar en RNE"
+                    onclick={handleCheck}
+                    disabled={isLoading}
+                    icon-name="utility:search">
+                </lightning-button>
+            </div>
+            
+            <!-- ========================================= -->
+            <!-- SPINNER DE CARGA -->
+            <!-- ========================================= -->
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Consultando..." size="medium"></lightning-spinner>
+                    <p class="slds-m-top_small slds-text-body_small">Consultando registro en CRC...</p>
+                </div>
+            </template>
+            
+            <!-- ========================================= -->
+            <!-- TABLA DE RESULTADOS ENCONTRADOS -->
+            <!-- ========================================= -->
+            <template if:true={hasFoundResults}>
+                <div class="slds-m-top_large">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Resultados</h3>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="slds-text-align_left" scope="col" style="width: 8%;">
+                                    <div class="slds-truncate" title="Tipo">Tipo</div>
+                                </th>
+                                <th class="slds-text-align_left" scope="col" style="width: 18%;">
+                                    <div class="slds-truncate" title="Número">Número</div>
+                                </th>
+                                <th class="slds-text-align_center" scope="col" style="width: 12%;">
+                                    <div class="slds-truncate" title="SMS">SMS</div>
+                                </th>
+                                <th class="slds-text-align_center" scope="col" style="width: 18%;">
+                                    <div class="slds-truncate" title="Recibir llamadas">Recibir llamadas</div>
+                                </th>
+                                <th class="slds-text-align_center" scope="col" style="width: 18%;">
+                                    <div class="slds-truncate" title="Aplicaciones móviles">Aplicaciones móviles</div>
+                                </th>
+                                <th class="slds-text-align_center" scope="col" style="width: 26%;">
+                                    <div class="slds-truncate" title="Fecha creación">Fecha creación</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={resultsForDisplay} for:item="result">
+                                <tr key={result.value} class="slds-hint-parent">
+                                    <!-- TIPO -->
+                                    <td data-label="Tipo">
+                                        <div class="slds-truncate" title={result.type}>{result.type}</div>
+                                    </td>
+                                    <!-- NÚMERO/EMAIL -->
+                                    <td data-label="Número">
+                                        <div class="slds-truncate" title={result.value}>
+                                            <strong>{result.value}</strong>
+                                        </div>
+                                    </td>
+                                    <!-- SMS -->
+                                    <td data-label="SMS" class="slds-text-align_center">
+                                        <div class="slds-truncate" title={result.canReceiveSMS}>
+                                            <template if:true={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_error">
+                                                    {result.canReceiveSMS}
+                                                </span>
+                                            </template>
+                                            <template if:false={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_success">
+                                                    {result.canReceiveSMS}
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <!-- LLAMADAS -->
+                                    <td data-label="Recibir llamadas" class="slds-text-align_center">
+                                        <div class="slds-truncate" title={result.canReceiveCalls}>
+                                            <template if:true={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_error">
+                                                    {result.canReceiveCalls}
+                                                </span>
+                                            </template>
+                                            <template if:false={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_success">
+                                                    {result.canReceiveCalls}
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <!-- APLICACIONES -->
+                                    <td data-label="Aplicaciones móviles" class="slds-text-align_center">
+                                        <div class="slds-truncate" title={result.applications}>
+                                            <template if:true={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_error">
+                                                    {result.applications}
+                                                </span>
+                                            </template>
+                                            <template if:false={result.isExcluded}>
+                                                <span class="slds-badge slds-badge_lightest slds-theme_success">
+                                                    {result.applications}
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <!-- FECHA -->
+                                    <td data-label="Fecha creación" class="slds-text-align_center">
+                                        <div class="slds-truncate" title={result.creationDate}>
+                                            {result.creationDate}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+            
+            <!-- ========================================= -->
+            <!-- REGISTROS NO ENCONTRADOS -->
+            <!-- ========================================= -->
+            <template if:true={hasNotFoundResults}>
+                <div class="slds-m-top_large">
+                    <template for:each={notFoundResults} for:item="result">
+                        <article key={result.value} class="slds-card slds-theme_warning">
+                            <div class="slds-card__body slds-card__body_inner slds-p-around_small">
+                                <div class="slds-media slds-media_center">
+                                    <div class="slds-media__figure">
+                                        <lightning-icon
+                                            icon-name="utility:info"
+                                            size="small"
+                                            variant="warning">
+                                        </lightning-icon>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h3 class="slds-text-heading_small">
+                                            {result.type}: <strong>{result.value}</strong>
+                                        </h3>
+                                        <p class="slds-text-body_small slds-m-top_xx-small">
+                                            {result.message}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </template>
+            
+        </div>
+    </lightning-card>
+</template>

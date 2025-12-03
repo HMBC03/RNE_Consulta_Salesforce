@@ -1,0 +1,63 @@
+<template>
+    <div class="document-form">
+        <lightning-card title="Consulta RNE (CRC)" icon-name="standard:search">
+            <div class="slds-p-around_medium">
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <lightning-input label="Correo Electrónico" value={email} onchange={handleEmailChange} type="email"></lightning-input>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-input label="Número Telefónico" value={phoneNumber} onchange={handlePhoneChange} type="tel"></lightning-input>
+                    </div>
+                </div>
+
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <lightning-button variant="brand" label="Consultar" onclick={handleCheck} disabled={isLoading} icon-name="utility:search"></lightning-button>
+                </div>
+
+                <template if:true={isLoading}>
+                    <div class="slds-is-relative slds-m-top_large">
+                        <lightning-spinner alternative-text="Cargando..." size="small"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:true={queryResult}>
+                    <div class="slds-m-top_large">
+                        
+                        <div class="slds-notify slds-notify_alert slds-theme_info" role="alert">
+                            <span class="slds-assistive-text">info</span>
+                            <h2>{queryResult.Response_Message__c}</h2>
+                        </div>
+
+                        <template if:true={contactDetails}>
+                            <div class="slds-m-top_medium">
+                                <p class="slds-m-bottom_small slds-text-title_caps">Detalle de Canales:</p>
+                                
+                                <div class="slds-grid slds-gutters">
+                                    <template for:each={contactDetails} for:item="item">
+                                        <div key={item.key} class="slds-col">
+                                            <div class={item.boxClass}>
+                                                <lightning-icon icon-name={item.iconName} size="small" variant="inverse" class="slds-m-bottom_xx-small"></lightning-icon>
+                                                <div class="slds-text-heading_small slds-p-top_xx-small">
+                                                    <strong>{item.statusText}</strong>
+                                                </div>
+                                                <div class="slds-text-body_small">
+                                                    {item.label}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="slds-text-align_right slds-m-top_small slds-text-color_weak slds-text-body_small">
+                            Consultado: {queryResult.Query_Date__c}
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+        </lightning-card>
+    </div>
+</template>

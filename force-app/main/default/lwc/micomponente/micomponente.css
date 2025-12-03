@@ -1,0 +1,9 @@
+.document-form{
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    height: 90vh;
+    justify-content: space-around;
+    align-items: center;
+    
+}

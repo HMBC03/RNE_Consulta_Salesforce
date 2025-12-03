@@ -1,0 +1,66 @@
+/* ========================================= */
+/* ESTILOS DE TABLA */
+/* ========================================= */
+.slds-table_bordered {
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+}
+
+.slds-table thead th {
+    background-color: #f3f2f2;
+    font-weight: 700;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8125rem;
+}
+
+.slds-table tbody tr:hover {
+    background-color: #fafaf9;
+    cursor: default;
+}
+
+.slds-table tbody td {
+    padding: 0.75rem 0.5rem;
+}
+
+/* ========================================= */
+/* ESTILOS DE BADGES */
+/* ========================================= */
+.slds-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+}
+
+.slds-theme_success {
+    background-color: #4bca81;
+    color: white;
+}
+
+.slds-theme_error {
+    background-color: #ea001e;
+    color: white;
+}
+
+.slds-theme_warning {
+    background-color: #ffb75d;
+    color: #080707;
+}
+
+/* ========================================= */
+/* ESTILOS DE CARDS */
+/* ========================================= */
+.slds-card {
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
+@media (max-width: 768px) {
+    .slds-table_fixed-layout {
+        table-layout: auto;
+    }
+}

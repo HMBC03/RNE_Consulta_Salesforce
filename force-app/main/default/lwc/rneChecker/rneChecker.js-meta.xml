@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Versión del API -->
+    <apiVersion>65.0</apiVersion>
+    
+    <!-- Hacer visible el componente -->
+    <isExposed>true</isExposed>
+    
+    <!-- Targets: Dónde puede usarse -->
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    
+    <!-- Configuración para páginas de registro -->
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <!-- Objetos donde puede agregarse -->
+            <objects>
+                <object>Lead</object>
+                <object>Contact</object>
+                <object>Account</object>
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
