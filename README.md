@@ -68,10 +68,6 @@ Edita cualquier página de registro (Record Page) o App Page en el Lightning App
 
 ## 📸 Capturas de Pantalla
 
-Componente resultado de una consulta exitosa:
-
-<img width="508" height="431" alt="Captura de pantalla 2025-12-02 234644" src="https://github.com/user-attachments/assets/90cea372-2310-4a69-b579-3ae5426d785c" />
-
 Resultado cuando no existe o no esta registrado:
 
 <img width="551" height="368" alt="Captura de pantalla 2025-12-02 234820" src="https://github.com/user-attachments/assets/8624e16f-4f25-4f04-8122-bfd4132c0ba6" />
