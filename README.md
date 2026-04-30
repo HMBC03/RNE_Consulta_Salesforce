@@ -25,7 +25,7 @@ El proyecto sigue una arquitectura MVC simplificada dentro del ecosistema Salesf
    - **Named Credentials / Custom Labels**: Manejo seguro del Token de autenticación.
    - Ejemplo de la estructura JSON del API CRC:
      
-   <img width="563" height="273" alt="Captura de pantalla 2025-12-02 231144" src="https://github.com/user-attachments/assets/a80a8171-4f14-4eef-9d73-99ca52e925ac" />
+   
 
 
 ## ⚙️ Instalación y Configuración
